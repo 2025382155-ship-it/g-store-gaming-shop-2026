@@ -11,8 +11,17 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentSlide = 0;
   let timer = null;
 
+  function loadSlideImage(slide) {
+    if (slide.dataset.heroImage && !slide.style.getPropertyValue("--hero-image")) {
+      slide.style.setProperty("--hero-image", slide.dataset.heroImage);
+      delete slide.dataset.heroImage;
+    }
+  }
+
   function showSlide(index) {
     currentSlide = (index + slides.length) % slides.length;
+    loadSlideImage(slides[currentSlide]);
+    loadSlideImage(slides[(currentSlide + 1) % slides.length]);
     slides.forEach((slide, slideIndex) => slide.classList.toggle("active", slideIndex === currentSlide));
     indicators.forEach((indicator, indicatorIndex) => {
       const active = indicatorIndex === currentSlide;

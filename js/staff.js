@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function getProducts() {
+  if (typeof products === "function") return products();
   return JSON.parse(localStorage.getItem("iplay_products")) || [];
 }
 
@@ -465,10 +466,15 @@ function renderCategoryChart(products, activeOrders) {
 function renderChart(id, type, labels, data) {
   const existing = Chart.getChart(id);
   if (existing) existing.destroy();
+  const styles = getComputedStyle(document.documentElement);
+  const textColor = styles.getPropertyValue("--iplay-text").trim() || "#1F1F1F";
+  const mutedColor = styles.getPropertyValue("--iplay-muted").trim() || "#6C757D";
+  const borderColor = styles.getPropertyValue("--iplay-border").trim() || "#E8E8E8";
+  const accentColor = styles.getPropertyValue("--iplay-purple").trim() || "#006FCD";
   const dataset = {
     data,
-    backgroundColor: type === "bar" ? "#006FCD" : ["#006FCD", "#198754", "#6C757D", "#171717", "#A7A7A7"],
-    borderColor: "#006FCD",
+    backgroundColor: type === "bar" ? accentColor : [accentColor, "#198754", "#6C757D", "#171717", "#A7A7A7"],
+    borderColor: accentColor,
     borderRadius: 4
   };
   new Chart(document.getElementById(id), {
@@ -476,14 +482,19 @@ function renderChart(id, type, labels, data) {
     data: { labels, datasets: [dataset] },
     options: {
       responsive: true,
-      plugins: { legend: { labels: { color: "#1F1F1F" } } },
+      plugins: { legend: { labels: { color: textColor } } },
       scales: type === "bar" ? {
-        x: { ticks: { color: "#6C757D" }, grid: { color: "#E8E8E8" } },
-        y: { ticks: { color: "#6C757D" }, grid: { color: "#E8E8E8" }, beginAtZero: true }
+        x: { ticks: { color: mutedColor }, grid: { color: borderColor } },
+        y: { ticks: { color: mutedColor }, grid: { color: borderColor }, beginAtZero: true }
       } : undefined
     }
   });
 }
+
+window.addEventListener("gstore-theme-change", () => {
+  if (document.getElementById("staff-dashboard")) renderDashboard();
+  else if (document.getElementById("sales-chart")) renderSalesAnalytics();
+});
 
 function staffNotice(message, type) {
   const element = document.getElementById("staff-feedback");

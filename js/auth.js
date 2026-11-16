@@ -2,6 +2,36 @@
 
 const IPLAY_USERS_KEY = "iplay_users";
 const IPLAY_CURRENT_USER_KEY = "iplay_currentUser";
+const GSTORE_THEME_KEY = "gstore_theme";
+
+function applyTheme(theme) {
+  const selectedTheme = theme === "dark" ? "dark" : "light";
+  document.documentElement.dataset.theme = selectedTheme;
+  document.body?.setAttribute("data-theme", selectedTheme);
+  document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+    const isDark = selectedTheme === "dark";
+    button.innerHTML = `<i class="bi ${isDark ? "bi-sun" : "bi-moon-stars"}" aria-hidden="true"></i><span>${isDark ? "Light mode" : "Dark mode"}</span>`;
+    button.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+    button.title = isDark ? "Switch to light mode" : "Switch to dark mode";
+  });
+  window.dispatchEvent(new CustomEvent("gstore-theme-change", { detail: selectedTheme }));
+}
+
+function setupTheme() {
+  const savedTheme = localStorage.getItem(GSTORE_THEME_KEY);
+  applyTheme(savedTheme || "light");
+  const toggle = document.createElement("button");
+  toggle.type = "button";
+  toggle.className = "theme-toggle-floating btn btn-outline-light btn-sm";
+  toggle.dataset.themeToggle = "";
+  toggle.addEventListener("click", () => {
+    const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    localStorage.setItem(GSTORE_THEME_KEY, nextTheme);
+    applyTheme(nextTheme);
+  });
+  document.body.append(toggle);
+  applyTheme(document.documentElement.dataset.theme);
+}
 
 const DEMO_USERS = [
   {
@@ -249,6 +279,7 @@ function logout() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  setupTheme();
   if (document.querySelector(".staff-sidebar")) {
     document.body.classList.add("admin-page");
   }

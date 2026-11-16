@@ -304,7 +304,7 @@ function productCard(product, variantOptions = productVariantGroup(product), pla
     <div class="col-sm-6 col-lg-4 col-xl-3">
       <article class="retail-card h-100">
         <a class="retail-image" href="${productLink}" aria-label="View ${escapeText(title)}">
-          <img class="${imageFit}" src="${escapeText(product.image)}" alt="${escapeText(title)}" data-product-image>
+          <img class="${imageFit}" src="${escapeText(product.image)}" alt="${escapeText(title)}" loading="lazy" decoding="async" data-product-image>
           ${stockBadge(stockCount)}
           ${discount ? `<span class="shop-discount">-${discount}%</span>` : ""}
         </a>
@@ -465,7 +465,7 @@ function renderProductDetail() {
     </div>`).join("");
   container.innerHTML = `
     <div class="row g-4 align-items-start">
-      <div class="col-lg-6"><div class="detail-image"><img src="${escapeText(selectedProduct.image)}" alt="${escapeText(selectedProduct.name)}" data-product-image></div></div>
+      <div class="col-lg-6"><div class="detail-image"><img src="${escapeText(selectedProduct.image)}" alt="${escapeText(selectedProduct.name)}" loading="eager" fetchpriority="high" decoding="async" data-product-image></div></div>
       <div class="col-lg-6">
         <p class="text-info text-uppercase fw-bold detail-platform">${escapeText(selectedProduct.category)} · ${escapeText(displayProductPlatform(selectedProduct))}</p>
         <h1 class="detail-title">${escapeText(selectedProduct.name)}</h1>
@@ -652,7 +652,7 @@ function renderCart() {
   }
   container.innerHTML = resolved.map(({ product, quantity }) => `
     <div class="cart-item">
-      <img src="${escapeText(product.image)}" alt="${escapeText(product.name)}" data-product-image>
+      <img src="${escapeText(product.image)}" alt="${escapeText(product.name)}" loading="lazy" decoding="async" data-product-image>
       <div class="flex-grow-1"><h2 class="h6 mb-1">${escapeText(product.name)}</h2><div class="small text-secondary">${escapeText(displayProductPlatform(product))}${displayProductVariant(product) ? ` · ${escapeText(displayProductVariant(product))}` : ""}</div></div>
       <div class="cart-controls">
         <input class="form-control form-control-sm cart-quantity" type="number" min="1" max="${product.stock}" value="${quantity}" data-id="${escapeText(product.id)}" aria-label="Quantity">
