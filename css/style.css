@@ -2317,6 +2317,97 @@ body.auth-page {
   animation: iplay-spin 700ms linear infinite;
 }
 
+.auth-page .demo-accounts {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid #e5e9f0;
+  border-radius: 10px;
+  background: #f8faff;
+}
+
+.auth-page .demo-accounts-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.auth-page .demo-accounts-heading h3 {
+  margin: 0;
+  color: #303744;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.auth-page .demo-account-list {
+  display: grid;
+  gap: 8px;
+}
+
+.auth-page .demo-account {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #e8ecf3;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.auth-page .demo-account-details {
+  min-width: 0;
+}
+
+.auth-page .demo-account-details h4 {
+  margin: 0 0 4px;
+  color: #303744;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.auth-page .demo-account-details h4 i {
+  margin-right: 4px;
+  color: #007bff;
+}
+
+.auth-page .demo-account-details p {
+  margin: 1px 0 0;
+  color: #555f70;
+  font-size: 0.71rem;
+  overflow-wrap: anywhere;
+}
+
+.auth-page .demo-account-details p span {
+  display: inline-block;
+  min-width: 48px;
+  color: #858d9a;
+}
+
+.auth-page .demo-account-button {
+  flex: 0 0 auto;
+  padding: 7px 9px;
+  border: 1px solid #cfe0ff;
+  border-radius: 7px;
+  color: #0069d9;
+  font-size: 0.7rem;
+  font-weight: 650;
+  background: #f2f7ff;
+}
+
+.auth-page .demo-account-button:hover,
+.auth-page .demo-account-button:focus-visible {
+  border-color: #007bff;
+  color: #0056b3;
+  background: #e8f1ff;
+}
+
+.auth-page .demo-account-button:focus-visible {
+  outline: 3px solid rgba(0, 123, 255, 0.18);
+  outline-offset: 2px;
+}
+
 .auth-page .auth-switch {
   margin-top: 26px;
   color: #686868;
@@ -2396,6 +2487,16 @@ body.auth-page {
   .auth-page .brand-tagline {
     max-width: 260px;
     font-size: 2.15rem;
+  }
+
+  .auth-page .demo-account {
+    gap: 6px;
+    padding: 9px;
+  }
+
+  .auth-page .demo-account-button {
+    max-width: 116px;
+    white-space: normal;
   }
 
   .auth-page .brand-copy {

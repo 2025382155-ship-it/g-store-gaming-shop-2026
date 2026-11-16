@@ -151,6 +151,19 @@ function setupLogin() {
   });
 }
 
+function setupDemoAccounts() {
+  const emailInput = document.getElementById("login-email");
+  const passwordInput = document.getElementById("login-password");
+  if (!emailInput || !passwordInput) return;
+
+  document.querySelectorAll("[data-demo-email][data-demo-password]").forEach((button) => {
+    button.addEventListener("click", () => {
+      emailInput.value = button.dataset.demoEmail;
+      passwordInput.value = button.dataset.demoPassword;
+    });
+  });
+}
+
 function setupRegistration() {
   const form = document.getElementById("register-form");
   if (!form) return;
@@ -241,6 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   setupPasswordToggles();
   setupLogin();
+  setupDemoAccounts();
   setupRegistration();
   setupLogout();
 });
